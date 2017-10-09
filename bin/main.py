@@ -1,9 +1,15 @@
 #!/usr/bin/env python
 
+import logging
+import logging.config
 import os
 import sys
 
 from flask import Flask
+
+# setup logger
+logging.config.fileConfig(os.path.join(os.path.dirname(__file__), '..', 'python.conf'))
+logger = logging.getLogger()
 
 # add load path to ../home_mqtt_gateway
 if __name__ == '__main__':
@@ -18,7 +24,7 @@ app = App()
 
 
 for c in app.simple_commands:
-    print('Registering url for %s' % c.route)
+    logger.info('Registering url for %s' % c.route)
     server.add_url_rule(c.route, c.route, app.generate_callback_function_for_simple_command(c))
     # app.generate_callback_function_for_simple_command(c))
 

@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
+import logging
 from urllib.parse import urlparse
 import os
 
 import paho.mqtt.client as mqtt
+
+logger = logging.getLogger()
 
 
 class MQTTBase(object):
@@ -25,6 +28,7 @@ class MQTTBase(object):
 
     def on_connect(self, client, userdata, flags, rc):
         self.is_connected = True
+        logging.info('Connected to MQTT Broker')
         print('Connected to MQTT Broker')
 
     def on_message(self, client, userdata, flags, rc):
