@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from mqtt_base import MQTTBase
+from .mqtt_base import MQTTBase
 
 
 class Subscriber(MQTTBase):
@@ -12,7 +12,8 @@ class Subscriber(MQTTBase):
         self.mqtt_client.subscribe(topic)
 
     def echo_back_callback(self, client, userdata, message):
-        print(message)
+        print('topic=%s, message=%s' % (message.topic,
+                                        str(message.payload)))
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from mqtt_base import MQTTBase
+from .mqtt_base import MQTTBase
 
 
 class Publisher(MQTTBase):
