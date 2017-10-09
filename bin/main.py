@@ -16,9 +16,11 @@ from home_mqtt_gateway.app import App
 server = Flask(__name__)
 app = App()
 
-@server.route('/')
-def app_hello():
-    return app.callback_for_route()
+
+for c in app.simple_commands:
+    print('Registering url for %s' % c.route)
+    server.add_url_rule(c.route, c.route, app.generate_callback_function_for_simple_command(c))
+    # app.generate_callback_function_for_simple_command(c))
 
 
 if __name__ == '__main__':

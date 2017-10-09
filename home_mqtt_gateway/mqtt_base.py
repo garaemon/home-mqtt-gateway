@@ -41,6 +41,8 @@ class MQTTBase(object):
     def run_forever(self):
         self.mqtt_client.loop_forever()
 
+    def proc(self, timeout=1.0):
+        self.mqtt_client.loop(timeout=timeout)
 
 if __name__ == '__main__':
     b = MQTTBase()

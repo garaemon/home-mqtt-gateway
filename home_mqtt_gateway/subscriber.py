@@ -6,9 +6,14 @@ from .mqtt_base import MQTTBase
 class Subscriber(MQTTBase):
     def __init__(self):
         super().__init__()
+        self.callbacks = dict()
+
+    def on_message(self, client, userdata, message):
+        callback = self.callbacks[message.topic]
+        callback(client, userdata, message)
 
     def subscribe(self, topic, callback):
-        self.mqtt_client.on_message = callback
+        self.callbacks[topic] = callback
         self.mqtt_client.subscribe(topic)
 
     def echo_back_callback(self, client, userdata, message):

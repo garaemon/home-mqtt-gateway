@@ -10,9 +10,10 @@ if __name__ == '__main__':
         sys.path.insert(0, libdir)
 
 from home_mqtt_gateway.subscriber import Subscriber
+from home_mqtt_gateway.app import SIMPLE_COMMANDS
 
 if __name__ == '__main__':
     s = Subscriber()
-    print('Subscribing test data')
-    s.subscribe('hello/world', s.echo_back_callback)
+    for c in SIMPLE_COMMANDS:
+        s.subscribe(c.topic, s.echo_back_callback)
     s.run_forever()
