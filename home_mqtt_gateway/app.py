@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 
+import logging
+import os
+
 from .publisher import Publisher
+
+logger = logging.getLogger()
 
 
 class SimpleCommandContainer(object):
@@ -53,6 +58,7 @@ class App(object):
             'hello/world', 'hello world sentence')
 
     def callback_for_simple_command(self, c):
+        logger.info('Run callback for route %s' % c.route)
         return self.publish_message_with_html_result(
             c.topic, c.content)
 
