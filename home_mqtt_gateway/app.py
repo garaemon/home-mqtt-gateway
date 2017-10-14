@@ -35,7 +35,15 @@ SIMPLE_COMMANDS = [
                            topic='tv/turn_on'),
     SimpleCommandContainer(route='/turn_off_tv',
                            topic='tv/turn_off'),
-]
+    SimpleCommandContainer(route='/volume_up_tv',
+                           topic='tv/volume_up'),
+    SimpleCommandContainer(route='/volume_down_tv',
+                           topic='tv/volume_down'),
+    SimpleCommandContainer(route='/channel_up_tv',
+                           topic='tv/channel_up'),
+    SimpleCommandContainer(route='/channel_down_tv',
+                           topic='tv/channel_down'),
+    ]
 
 
 class App(object):
