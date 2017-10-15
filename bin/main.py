@@ -30,5 +30,4 @@ for c in app.simple_commands:
 
 
 if __name__ == '__main__':
-    app.block_until_connect()
     server.run()
