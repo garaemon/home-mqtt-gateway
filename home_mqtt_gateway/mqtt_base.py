@@ -24,6 +24,7 @@ class MQTTBase(object):
                                          password=url.password)
         self.mqtt_client.on_connect = self.on_connect
         self.mqtt_client.on_message = self.on_message
+        self.mqtt_client.on_publish = self.on_publish
         self.mqtt_client.on_disconnect = self.on_disconnect
         self.mqtt_client.connect(url.hostname, port=url.port)
 
@@ -35,8 +36,11 @@ class MQTTBase(object):
     def on_message(self, client, userdata, flags, rc):
         pass
 
-    def on_disconnect(client, userdata, rc):
+    def on_disconnect(self, client, userdata, rc):
         logging.info('Connection lost')
+
+    def on_publish(self, client, userdata, rc):
+        logging.info('published')
 
     def verify_mqtt_env(self):
         if self.MQTT_URL_ENV not in os.environ:
