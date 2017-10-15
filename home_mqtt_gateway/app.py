@@ -48,17 +48,17 @@ SIMPLE_COMMANDS = [
 
 class App(object):
     def __init__(self):
-        self.publisher = Publisher()
         self.simple_commands = SIMPLE_COMMANDS
 
     def get_all_routes(self):
         return [c.route for c in self.simple_commands]
 
-    def block_until_connect(self):
-        self.publisher.block_until_connect()
-
     def publish_message_with_html_result(self, topic, content):
-        self.publisher.publish(topic, content)
+        publisher = Publisher()
+        publisher.block_until_connect()
+        publisher.publish(topic, content)
+        publisher.proc(timeout=2.0)
+        publisher.disconnect()
         return 'Published message to %s' % topic
 
     def callback_for_root(self):
