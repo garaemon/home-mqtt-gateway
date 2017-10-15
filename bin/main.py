@@ -8,7 +8,7 @@ import sys
 from flask import Flask
 
 # setup logger
-logging.config.fileConfig(os.path.join(os.path.dirname(__file__), '..', 'python.conf'))
+logging.config.fileConfig(os.path.join(os.path.dirname(__file__), '..', 'logging.conf'))
 logger = logging.getLogger()
 
 # add load path to ../home_mqtt_gateway
