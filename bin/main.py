@@ -30,4 +30,4 @@ for c in app.simple_commands:
 app.register_passthrough(server)
 
 if __name__ == '__main__':
-    server.run()
+    server.run(host='0.0.0.0')
