@@ -4,15 +4,17 @@ import logging
 import os
 
 from .publisher import Publisher
+from flask import request
 
 logger = logging.getLogger()
 
 
 class SimpleCommandContainer(object):
-    def __init__(self, route, topic, content=None):
+    def __init__(self, route, topic, content=None, method='GET'):
         self.route = route
         self.topic = topic
         self.content = content
+        self.method = method
 
 
 SIMPLE_COMMANDS = [
@@ -73,4 +75,26 @@ class App(object):
     def generate_callback_function_for_simple_command(self, c):
         def callback():
             return self.callback_for_simple_command(c)
+        return callback
+
+    def register_passthrough(self, server):
+        # Convert HTTP to mqtt message
+        server.add_url_rule('/passthrough', methods=['POST'], view_func=self.passthrough_callback())
+
+    def passthrough_callback(self):
+
+        def callback():
+            topic = request.json['topic']
+            if 'content' in request.json:
+                content = request.json['content']
+            else:
+                content = None
+            print((topic, content))
+            publisher = Publisher()
+            publisher.block_until_connect()
+            publisher.publish(topic, content)
+            publisher.proc(timeout=2.0)
+            publisher.disconnect()
+            return 'Published message to %s' % topic
+
         return callback

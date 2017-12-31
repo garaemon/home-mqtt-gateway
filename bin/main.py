@@ -22,12 +22,12 @@ from home_mqtt_gateway.app import App
 server = Flask(__name__)
 app = App()
 
-
 for c in app.simple_commands:
     logger.info('Registering url for %s' % c.route)
-    server.add_url_rule(c.route, c.route, app.generate_callback_function_for_simple_command(c))
+    server.add_url_rule(
+        c.route, c.route, app.generate_callback_function_for_simple_command(c), methods=[c.method])
     # app.generate_callback_function_for_simple_command(c))
-
+app.register_passthrough(server)
 
 if __name__ == '__main__':
     server.run()
