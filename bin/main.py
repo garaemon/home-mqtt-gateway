@@ -18,6 +18,7 @@ if __name__ == '__main__':
         sys.path.insert(0, libdir)
 
 from home_mqtt_gateway.app import App
+from home_mqtt_gateway.ifttt import run_ifttt_webhook
 
 server = Flask(__name__)
 app = App()
@@ -30,4 +31,5 @@ for c in app.simple_commands:
 app.register_passthrough(server)
 
 if __name__ == '__main__':
+    run_ifttt_webhook('Running https->mqtt server')
     server.run(host='0.0.0.0')

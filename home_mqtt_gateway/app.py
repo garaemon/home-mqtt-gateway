@@ -4,6 +4,7 @@ import logging
 import os
 
 from .publisher import Publisher
+from .ifttt import run_ifttt_webhook
 from flask import request
 
 logger = logging.getLogger()
@@ -74,6 +75,7 @@ class App(object):
 
     def generate_callback_function_for_simple_command(self, c):
         def callback():
+            run_ifttt_webhook('Received {}'.format(c.route))
             return self.callback_for_simple_command(c)
         return callback
 
@@ -85,6 +87,7 @@ class App(object):
 
         def callback():
             topic = request.json['topic']
+            run_ifttt_webhook('Received {} on /passthrough'.format(topic))
             if 'content' in request.json:
                 content = request.json['content']
             else:
